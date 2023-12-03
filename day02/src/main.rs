@@ -61,6 +61,22 @@ fn part_1(lines: Vec<String>) -> u32 {
 
 fn part_2(lines: Vec<String>) -> u32 {
     let mut sum: u32= 0;
+    for line in lines {
+        let mut min_rgb = (0, 0, 0);
+        let (_, rgbs) = parse_game(line);
+        for (r,g,b) in rgbs.iter() {
+            if *r > min_rgb.0 {
+                min_rgb.0 = *r;
+            }
+            if *g > min_rgb.1 {
+                min_rgb.1 = *g;
+            }
+            if *b > min_rgb.2 {
+                min_rgb.2 = *b;
+            }
+        }
+        sum += min_rgb.0 * min_rgb.1 * min_rgb.2;
+    }
     sum
 }
 
@@ -68,17 +84,16 @@ fn main() {
     let input = get_text("input.txt").unwrap();
 
     // part 1
-    let p1_input = get_text("part1_example.txt").unwrap();
-    assert!(part_1(p1_input) == 8);
+    let test_input = get_text("part1_example.txt").unwrap();
+    assert!(part_1(test_input.clone()) == 8);
 
     let p1_answer = part_1(input.clone());
     println!("part_1 == {}", p1_answer);
 
 
     // part 2
-    // let p2_input = get_text("part2_example.txt").unwrap();
-    // assert!(part_2(p2_input) == 281);
+    assert!(part_2(test_input.clone()) == 2286);
 
-    // let p2_answer = part_2(input.clone());
-    // println!("part_2 == {}", p2_answer);
+    let p2_answer = part_2(input.clone());
+    println!("part_2 == {}", p2_answer);
 }
